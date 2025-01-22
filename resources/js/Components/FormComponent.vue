@@ -29,6 +29,7 @@
         Submit
       </button>
     </form>
+    <p v-if="successMessage" class="text-green-500 mt-4"> {{ successMessage }}</p>
   </div>
 </template>
 
@@ -43,6 +44,7 @@ export default {
         email: "",
       },
       errors: {},
+      successMessage: '',
     };
   },
   methods: {
@@ -50,7 +52,7 @@ export default {
       try {
         this.errors = {}; // Limpiar errores anteriores
         const response = await axios.post("/submit-form", this.form);
-        alert(response.data.message); // Mostrar mensaje de éxito
+        this.successMessage = response.data.message
         this.form.name = "";
         this.form.email = "";
       } catch (error) {
