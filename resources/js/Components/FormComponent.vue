@@ -9,8 +9,20 @@
           id="name"
           v-model="form.name"
           class="mt-1 block w-full p-2 border rounded-md"
+          placeholder="Juan"
         />
         <small v-if="errors.name" class="text-red-500">{{ errors.name }}</small>
+      </div>
+      <div class="mb-4">
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input
+          type="password"
+          id="password"
+          v-model="form.password"
+          class="mt-1 block w-full p-2 border rounded-md"
+          placeholder="Garcia"
+        />
+        <small v-if="errors.password" class="text-red-500">{{ errors.password }}</small>
       </div>
       <div class="mb-4">
         <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
@@ -19,6 +31,7 @@
           id="email"
           v-model="form.email"
           class="mt-1 block w-full p-2 border rounded-md"
+          placeholder="juan@gmail.com"
         />
         <small v-if="errors.email" class="text-red-500">{{ errors.email }}</small>
       </div>
@@ -42,6 +55,7 @@ export default {
       form: {
         name: "",
         email: "",
+        password: "",
       },
       errors: {},
       successMessage: '',
@@ -55,6 +69,7 @@ export default {
         this.successMessage = response.data.message
         this.form.name = "";
         this.form.email = "";
+        this.form.password = "";
       } catch (error) {
         if (error.response && error.response.data.errors) {
           this.errors = error.response.data.errors; // Mostrar errores del backend

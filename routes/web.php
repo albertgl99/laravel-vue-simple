@@ -13,14 +13,20 @@ Route::get('/{any}', function () {
 Route::post('/submit-form', function (Request $request) {
     $validated = $request->validate([
         'name' => 'required|string|max:255',
-        'email'=> 'required|email',
+        'email' => 'required|email|unique:form_submissions,email',
+        'password' => 'required|string|min:8',
     ], [
         'name.required' => 'El nombre es obligatorio.',
         'email.required' => 'El correo electronico es obligatorio.',
         'email.email' => 'Introduce una dirección de correo valida',
+        'password.required' => 'La contraseña es obligatoria',
     ]);
 
-    FormSubmission::create($validated);
+    FormSubmission::create([
+        'name'=> $validated['name'],
+        'email'=> $validated['email'],
+        'password'=> bcrypt($validated['password']),
+    ]);
 
     // Devuelve un JSON con el mensaje de éxito
     return response()->json(['message' => 'Formulario enviado correctamente.']);
