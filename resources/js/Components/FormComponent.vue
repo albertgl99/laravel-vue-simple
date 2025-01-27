@@ -47,34 +47,35 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios"; // Importa Axios para las solicitudes HTTP
 
 export default {
   data() {
     return {
       form: {
-        name: "",
-        email: "",
-        password: "",
+        name: "", // Campo para el nombre
+        email: "", // Campo para el correo
+        password: "", // Campo para la contraseña
       },
-      errors: {},
-      successMessage: '',
+      errors: {}, // Objeto para almacenar errores del backend
+      successMessage: '', // Mensaje de éxito
     };
   },
   methods: {
     async submitForm() {
       try {
-        this.errors = {}; // Limpiar errores anteriores
-        const response = await axios.post("/submit-form", this.form);
-        this.successMessage = response.data.message
+        this.errors = {}; // Limpia errores previos
+        const response = await axios.post("/signup", this.form); // Envía los datos al backend
+        this.successMessage = response.data.message; // Almacena el mensaje de éxito
+        // Limpia los campos del formulario tras el envío
         this.form.name = "";
         this.form.email = "";
         this.form.password = "";
       } catch (error) {
         if (error.response && error.response.data.errors) {
-          this.errors = error.response.data.errors; // Mostrar errores del backend
+          this.errors = error.response.data.errors; // Muestra errores del backend si existen
         } else {
-          alert("Something went wrong.");
+          alert("Something went wrong."); // Mensaje genérico para errores inesperados
         }
       }
     },

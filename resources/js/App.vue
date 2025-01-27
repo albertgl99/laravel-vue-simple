@@ -8,7 +8,7 @@
                 </ul>
             </nav>
         </header>
-        <main class="p-4">
+        <main>
             <router-view /> <!-- Aquí se renderizan las rutas -->
         </main>
     </div>
